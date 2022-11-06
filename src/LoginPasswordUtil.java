@@ -1,13 +1,13 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Data {
+public class LoginPasswordUtil {
     private final String login;
     private final String password;
     private final String confirmPassword;
 
 
-    public Data(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException{
+    public LoginPasswordUtil (String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException{
 
         Pattern pt = Pattern.compile("\\w{1,20}");
         Matcher mt=pt.matcher(login);
