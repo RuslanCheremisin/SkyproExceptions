@@ -2,40 +2,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginPasswordUtil {
-    private final String login;
-    private final String password;
-    private final String confirmPassword;
+    private String login;
+    private String password;
+    private String confirmPassword;
 
 
-    public LoginPasswordUtil (String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException{
+    private LoginPasswordUtil(String login, String password, String confirmPassword) {
+
+
+    }
+
+    public static boolean checkData(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
+        LoginPasswordUtil loginPasswordUtil = new LoginPasswordUtil(login, password, confirmPassword);
 
         Pattern pt = Pattern.compile("\\w{1,20}");
-        Matcher mt=pt.matcher(login);
+        Matcher mt = pt.matcher(login);
 
-        if(!mt.matches()){
+        if (mt.matches()) {
+            loginPasswordUtil.login = login;
+            mt = pt.matcher(password);
+        } else {
             throw new WrongLoginException("Wrong Login Exception");
-        }else {
-            this.login = login;
         }
-        mt=pt.matcher(password);
-        if(!mt.matches()){
+        if (mt.matches()) {
+            loginPasswordUtil.password = password;
+            mt = pt.matcher(confirmPassword);
+
+        } else {
             throw new WrongPasswordException("Wrong Password Exception");
-        }else {
-            this.password = password;}
-        mt=pt.matcher(confirmPassword);
-        if(!password.equals(confirmPassword)){
+
+        }
+        if (!password.equals(confirmPassword)) {
             throw new WrongPasswordException("Wrong Password Exception: Confirming password doesn't match");
-        }else {
-            this.confirmPassword = confirmPassword;}
-
+        } else {
+            loginPasswordUtil.confirmPassword = confirmPassword;
+            return true;
+        }
     }
 
-    public void checkPassword(String text){
 
-    }
-
-    public void getLoginPasswordInfo() {
-        System.out.println(login + "\n"+password);
-    }
 }
 
